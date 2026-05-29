@@ -141,7 +141,7 @@ export function AiCopilotPanel({ isOpen, onClose }: AiCopilotPanelProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 w-full max-w-md h-[600px] max-h-[80vh] flex flex-col bg-background/95 backdrop-blur-md border border-border shadow-2xl rounded-2xl overflow-hidden animate-in slide-in-from-bottom-5">
+    <div className="fixed bottom-4 right-4 z-[70] w-full max-w-md h-[600px] max-h-[80vh] flex flex-col bg-background/95 backdrop-blur-md border border-border shadow-2xl rounded-2xl overflow-hidden animate-in slide-in-from-bottom-5">
 
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b bg-muted/30">

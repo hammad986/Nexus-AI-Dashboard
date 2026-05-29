@@ -11,7 +11,8 @@ export function AiCopilotButton() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-40 p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 group ${
+        aria-label="Open AI Copilot"
+        className={`fixed bottom-6 right-6 z-[60] p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 group ${
           isOpen ? 'translate-y-20 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
         } bg-indigo-600 hover:bg-indigo-700 text-white border-2 border-indigo-400/30`}
       >
