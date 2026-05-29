@@ -20,7 +20,7 @@ export function AccountDropdown({ email }: { email?: string | null }) {
   const initials = email?.[0]?.toUpperCase() ?? 'U'
 
   const handleLogout = async () => {
-    if (hasSupabaseConfig()) {
+    if (hasSupabaseConfig() && supabase) {
       await supabase.auth.signOut()
     }
     router.push('/auth/login')

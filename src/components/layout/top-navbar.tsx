@@ -28,6 +28,10 @@ export function TopNavbar() {
     }
 
     const getUser = async () => {
+      if (!supabase) {
+        setEmail('founder@nexusai.dev')
+        return
+      }
       try {
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
