@@ -1,0 +1,150 @@
+IMPORTANT
+
+STOP ADDING FEATURES.
+
+The project is now in FINAL PORTFOLIO POLISH mode.
+
+Do NOT add:
+
+* new AI features
+* new SaaS features
+* auth improvements
+* workspace features
+* backend functionality
+
+==================================================
+PRIORITY 1
+==========
+
+Fix the Guided Tour immediately.
+
+Current issue:
+
+The onboarding modal appears.
+
+Buttons:
+
+* Continue
+* Skip
+
+are visible.
+
+But they are not functioning correctly.
+
+Users can become trapped inside the onboarding experience.
+
+This is a portfolio-blocking issue.
+
+==================================================
+TASK
+====
+
+Inspect the entire guided tour implementation.
+
+Check:
+
+* modal component
+* state management
+* provider
+* localStorage persistence
+* button handlers
+* step progression
+* overlay interaction
+* z-index issues
+* event handling
+
+Do NOT assume.
+
+Actually trace the code path.
+
+==================================================
+VERIFY
+======
+
+After fixing:
+
+Test:
+
+Step 1 → Step 2
+
+Step 2 → Step 3
+
+Step 3 → Complete
+
+Skip → Close Tour
+
+Refresh page → Tour should not reappear if dismissed
+
+Verify manually.
+
+==================================================
+PRIORITY 2
+==========
+
+Perform the cleanup implementation.
+
+Previously identified:
+
+DELETE:
+
+* src/components/providers/demo-scenario-provider.tsx
+* src/components/dashboard/dashboard-overview.tsx
+* src/components/dashboard/ai-insight-card.tsx
+
+Remove all associated imports.
+
+==================================================
+PRIORITY 3
+==========
+
+Clean folder structure.
+
+Goals:
+
+* remove dead code
+* remove unused imports
+* remove abandoned utilities
+* remove unused exports
+
+Keep repository clean.
+
+==================================================
+PRIORITY 4
+==========
+
+Run final validation.
+
+Execute:
+
+npm run build
+
+npm run dev
+
+Verify:
+
+* login
+* signup
+* dashboard
+* scenario switcher
+* AI copilot
+* charts
+* guided tour
+* notifications
+
+==================================================
+FINAL REPORT
+============
+
+Provide:
+
+1. Guided tour root cause
+2. Fix applied
+3. Files modified
+4. Files deleted
+5. Build status
+6. Runtime status
+7. Remaining cleanup items
+
+No new features.
+
+Only bug fixing and cleanup.
