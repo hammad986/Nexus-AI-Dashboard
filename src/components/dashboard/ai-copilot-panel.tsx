@@ -40,7 +40,7 @@ export function AiCopilotPanel({ isOpen, onClose }: AiCopilotPanelProps) {
     if (!text.trim()) return
 
     const userMessage: ChatMessage = {
-      id: Date.now().toString(),
+      id: `user_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       role: "user",
       content: text,
       createdAt: new Date(),
@@ -51,7 +51,7 @@ export function AiCopilotPanel({ isOpen, onClose }: AiCopilotPanelProps) {
     setIsTyping(true)
 
     // Add empty assistant message to update via stream
-    const aiMessageId = (Date.now() + 1).toString();
+    const aiMessageId = `ai_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     setMessages(prev => [...prev, {
       id: aiMessageId,
       role: "assistant",

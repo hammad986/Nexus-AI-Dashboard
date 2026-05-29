@@ -6,10 +6,11 @@ import { useRouter } from 'next/navigation'
 type DemoUser = {
   name: string
   email: string
-  password: string
   workspaces: { id: string; name: string }[]
   currentWorkspaceId?: string | null
 }
+
+type StoredUser = DemoUser & { passwordHash: string }
 
 type DemoAuthContext = {
   user: DemoUser | null
@@ -24,10 +25,20 @@ type DemoAuthContext = {
 
 const DemoAuthContext = React.createContext<DemoAuthContext | undefined>(undefined)
 
-const USERS_KEY = 'demo_users_v1'
+const USERS_KEY = 'demo_users_v2'
 const SESSION_KEY = 'demo_session_v1'
 
-function readUsers(): Record<string, DemoUser> {
+function hashPassword(password: string): string {
+  let hash = 0
+  for (let i = 0; i < password.length; i++) {
+    const char = password.charCodeAt(i)
+    hash = (hash << 5) - hash + char
+    hash = hash & hash
+  }
+  return `ph_${Math.abs(hash).toString(36)}`
+}
+
+function readUsers(): Record<string, StoredUser> {
   try {
     const raw = localStorage.getItem(USERS_KEY)
     return raw ? JSON.parse(raw) : {}
@@ -36,7 +47,7 @@ function readUsers(): Record<string, DemoUser> {
   }
 }
 
-function writeUsers(users: Record<string, DemoUser>) {
+function writeUsers(users: Record<string, StoredUser>) {
   localStorage.setItem(USERS_KEY, JSON.stringify(users))
 }
 
@@ -54,6 +65,10 @@ function writeSession(session: { email?: string } | null) {
   localStorage.setItem(SESSION_KEY, JSON.stringify(session))
 }
 
+function stripPassword({ passwordHash: _p, ...user }: StoredUser): DemoUser {
+  return user
+}
+
 export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const [user, setUser] = React.useState<DemoUser | null>(null)
@@ -66,10 +81,9 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
       const session = readSession()
       const users = readUsers()
       if (session?.email && users[session.email]) {
-        setUser(users[session.email])
+        setUser(stripPassword(users[session.email]))
       }
-    } catch (err) {
-      // ignore
+    } catch {
     } finally {
       setLoading(false)
     }
@@ -86,14 +100,20 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
         return { success: false, error: 'exists' }
       }
       const workspace = { id: `ws_${Date.now()}`, name: `${name}'s Workspace` }
-      const newUser: DemoUser = { name, email, password, workspaces: [workspace], currentWorkspaceId: workspace.id }
+      const newUser: StoredUser = {
+        name,
+        email,
+        passwordHash: hashPassword(password),
+        workspaces: [workspace],
+        currentWorkspaceId: workspace.id,
+      }
       users[email] = newUser
       writeUsers(users)
       writeSession({ email })
-      setUser(newUser)
+      setUser(stripPassword(newUser))
       router.push('/dashboard')
       return { success: true }
-    } catch (err) {
+    } catch {
       setError('Unable to create account')
       return { success: false, error: 'failed' }
     } finally {
@@ -108,12 +128,12 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const users = readUsers()
       const existing = users[email]
-      if (!existing || existing.password !== password) {
+      if (!existing || existing.passwordHash !== hashPassword(password)) {
         setError('Invalid credentials')
         return { success: false, error: 'invalid' }
       }
       writeSession({ email })
-      setUser(existing)
+      setUser(stripPassword(existing))
       router.push('/dashboard')
       return { success: true }
     } catch {
@@ -140,7 +160,7 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
     me.currentWorkspaceId = ws.id
     users[user.email] = me
     writeUsers(users)
-    setUser(me)
+    setUser(stripPassword(me))
     return ws
   }
 
@@ -152,7 +172,7 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
     me.currentWorkspaceId = id
     users[user.email] = me
     writeUsers(users)
-    setUser(me)
+    setUser(stripPassword(me))
   }
 
   return (

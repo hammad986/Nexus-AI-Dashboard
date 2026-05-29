@@ -56,7 +56,7 @@ export function useLiveOperations() {
         const template = EVENT_TEMPLATES[Math.floor(Math.random() * EVENT_TEMPLATES.length)]
         const newEvent: OperationalEvent = {
           ...template,
-          id: `ev_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+          id: `ev_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
           timestamp: new Date()
         }
         

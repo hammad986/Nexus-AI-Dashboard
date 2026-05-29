@@ -1,6 +1,7 @@
 "use client"
 
 import { useLiveOperations } from '@/hooks/use-live-operations'
+import { useDemoScenario } from '@/providers/demo-scenario-provider'
 import { DollarSign, Eye, LineChart, Users } from 'lucide-react'
 import { KpiCard } from './kpi-card'
 import { AiAnalysisPanel } from './ai-analysis-panel'
@@ -20,11 +21,33 @@ import { IngestionDiagnosticsPanel } from '../ops/ingestion-diagnostics-panel'
 export function CommandCenter({ snapshot }: { snapshot: DashboardSnapshot }) {
 
   const { events, isLive } = useLiveOperations()
+  const { metrics } = useDemoScenario()
 
-  // Calculate live MRR based on events for demo purposes
+  // Derive base MRR from current scenario's latest non-zero revenue data point
+  const latestRevenuePoint = [...metrics.revenueData].reverse().find(r => r.current > 0)
+  const baseMrr = latestRevenuePoint?.current ?? 92000
+
+  // Compute MRR trend vs prior period
+  const latestIndex = latestRevenuePoint
+    ? metrics.revenueData.findIndex(r => r.name === latestRevenuePoint.name)
+    : -1
+  const prevMrr = latestIndex > 0 ? metrics.revenueData[latestIndex - 1].current : latestRevenuePoint?.previous ?? 85000
+  const mrrTrendPct = prevMrr > 0 ? (((baseMrr - prevMrr) / prevMrr) * 100).toFixed(1) : '8.2'
+  const mrrTrendLabel = `${Number(mrrTrendPct) >= 0 ? '+' : ''}${mrrTrendPct}%`
+
+  // Add live revenue events on top of scenario base
   const revenueEvents = events.filter(e => e.type === 'revenue' && e.metricValue)
   const additionalMrr = revenueEvents.reduce((acc, e) => acc + (e.metricValue || 0), 0)
-  const currentMrr = 92000 + additionalMrr
+  const currentMrr = baseMrr + additionalMrr
+
+  // Derive total weekly acquisition from scenario data
+  const totalAcquisitions = metrics.acquisitionData.reduce(
+    (acc, d) => acc + d.organic + d.paid + d.referral, 0
+  )
+
+  // Derive W4 retention-based churn risk from scenario data
+  const w4Retention = metrics.retentionData.find(r => r.cohort === 'Week 4')?.retention ?? 70
+  const churnRiskPct = (100 - w4Retention).toFixed(1)
 
   // Merge live alerts into notifications
   const liveNotifications: SaaSNotification[] = [
@@ -60,10 +83,35 @@ export function CommandCenter({ snapshot }: { snapshot: DashboardSnapshot }) {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        <KpiCard title="Live MRR" value={`$${currentMrr.toLocaleString()}`} trend="+8.2%" trendUp={true} icon={DollarSign} className={additionalMrr > 0 ? 'border-emerald-500/50 shadow-[0_0_15px_-3px_rgba(16,185,129,0.3)] transition-all duration-500' : ''} />
-        <KpiCard title="Active Users" value="+2,350" trend="+12.1%" trendUp={true} icon={Users} />
-        <KpiCard title="Conversion Rate" value="4.5%" trend="+1.2%" trendUp={true} icon={LineChart} />
-        <KpiCard title="Churn Risk Score" value="1.2%" trend="-0.5%" trendUp={true} icon={Eye} />
+        <KpiCard
+          title="Live MRR"
+          value={`$${currentMrr.toLocaleString()}`}
+          trend={mrrTrendLabel}
+          trendUp={Number(mrrTrendPct) >= 0}
+          icon={DollarSign}
+          className={additionalMrr > 0 ? 'border-emerald-500/50 shadow-[0_0_15px_-3px_rgba(16,185,129,0.3)] transition-all duration-500' : ''}
+        />
+        <KpiCard
+          title="Weekly Acquisitions"
+          value={totalAcquisitions.toLocaleString()}
+          trend="+12.1%"
+          trendUp={true}
+          icon={Users}
+        />
+        <KpiCard
+          title="W4 Retention"
+          value={`${w4Retention}%`}
+          trend={w4Retention >= 70 ? '+1.2%' : '-3.4%'}
+          trendUp={w4Retention >= 70}
+          icon={LineChart}
+        />
+        <KpiCard
+          title="Churn Risk Score"
+          value={`${churnRiskPct}%`}
+          trend={Number(churnRiskPct) <= 30 ? '-0.5%' : '+4.2%'}
+          trendUp={Number(churnRiskPct) <= 30}
+          icon={Eye}
+        />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-12">
