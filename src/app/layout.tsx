@@ -15,8 +15,35 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Modern AI BI Platform",
-  description: "Next-generation business intelligence for modern startups",
+  title: {
+    default: "Nexus AI Ops",
+    template: "%s | Nexus AI Ops",
+  },
+  description:
+    "Portfolio demo: AI-powered SaaS analytics dashboard with scenario switching, streaming AI chat, and real-time startup telemetry. Built with Next.js 15, TypeScript, and Gemini AI.",
+  keywords: [
+    "SaaS analytics",
+    "AI dashboard",
+    "Next.js 15",
+    "portfolio",
+    "startup intelligence",
+    "Gemini AI",
+    "TypeScript",
+  ],
+  authors: [{ name: "Nexus AI Ops" }],
+  openGraph: {
+    title: "Nexus AI Ops — Startup Intelligence Platform",
+    description:
+      "AI-powered SaaS analytics with 5 curated startup scenarios, streaming AI chat, and real-time telemetry. A portfolio-grade Next.js 15 demo.",
+    type: "website",
+    siteName: "Nexus AI Ops",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nexus AI Ops — Startup Intelligence Platform",
+    description:
+      "AI-powered SaaS analytics with 5 curated startup scenarios, streaming AI chat, and real-time telemetry.",
+  },
 };
 
 export default function RootLayout({

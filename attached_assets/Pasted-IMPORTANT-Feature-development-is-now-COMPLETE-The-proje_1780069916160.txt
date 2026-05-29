@@ -1,0 +1,144 @@
+IMPORTANT
+
+Feature development is now COMPLETE.
+
+The project has reached portfolio-ready status.
+
+Do NOT add:
+
+* new features
+* new pages
+* auth systems
+* billing
+* deployment infrastructure
+* collaboration systems
+* backend complexity
+
+==================================================
+FINAL PHASE
+===========
+
+Documentation
+Publishing
+Repository Polish
+
+==================================================
+TASK 1
+======
+
+Fix any remaining small publishing issues.
+
+Examples:
+
+* favicon.ico
+* browser asset warnings
+* missing metadata
+* page titles
+* OpenGraph metadata
+
+Only if they are quick wins.
+
+==================================================
+TASK 2
+======
+
+Create a professional README.md.
+
+Include:
+
+# Project Overview
+
+# Features
+
+# Screenshots
+
+# AI Capabilities
+
+# Scenario System
+
+# Tech Stack
+
+# Installation
+
+# Running Locally
+
+# Project Structure
+
+# Future Improvements
+
+# License
+
+==================================================
+TASK 3
+======
+
+Generate a screenshot plan.
+
+Identify the best pages to capture.
+
+Provide:
+
+Filename
+Purpose
+
+Examples:
+
+dashboard-overview.png
+retention-crisis.png
+ai-insights-chat.png
+reports-page.png
+login-page.png
+
+==================================================
+TASK 4
+======
+
+Repository Audit
+
+Verify:
+
+* no dead imports
+* no unused files
+* no abandoned components
+* no broken routes
+
+==================================================
+TASK 5
+======
+
+Final Portfolio Evaluation
+
+Provide scores:
+
+UI
+UX
+Architecture
+AI Experience
+Code Quality
+Portfolio Value
+
+==================================================
+FINAL VERDICT
+=============
+
+Choose one:
+
+A) Portfolio Ready
+
+B) Needs Minor Adjustments
+
+C) Needs Major Work
+
+==================================================
+IMPORTANT
+=========
+
+Do not implement new product features.
+
+Do not expand the architecture.
+
+Do not add complexity.
+
+Focus only on preparing the repository for GitHub and portfolio presentation.
+
+This is the final publishing phase.
