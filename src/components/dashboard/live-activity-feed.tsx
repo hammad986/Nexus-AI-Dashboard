@@ -30,8 +30,8 @@ export function LiveActivityFeed({ events }: { events: OperationalEvent[] }) {
           ) : (
             events.map((event) => {
               const Icon = ICON_MAP[event.type]
-              return (
-                <div key={event.id} className="p-4 hover:bg-muted/30 transition-colors animate-in fade-in slide-in-from-top-4 duration-300">
+                return (
+                  <div key={event.id} className="p-4 hover:bg-muted/30 transition-colors transition-shadow duration-200 rounded-md hover:shadow-md animate-in fade-in slide-in-from-top-4 duration-300">
                   <div className="flex items-start gap-4">
                     <div className={`mt-0.5 rounded-full p-2 ${event.type === 'ai_alert' ? 'bg-cyan-500/10 text-cyan-400' : event.type === 'revenue' ? 'bg-emerald-500/10 text-emerald-400' : event.type === 'churn_risk' ? 'bg-rose-500/10 text-rose-400' : 'bg-muted text-muted-foreground'}`}>
                       <Icon className="h-4 w-4" />

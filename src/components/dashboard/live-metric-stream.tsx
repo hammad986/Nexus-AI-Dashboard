@@ -41,7 +41,8 @@ export function LiveMetricStream() {
   }, [])
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <div className="w-full min-h-[180px]" style={{ height: 180 }}>
+      <ResponsiveContainer width="100%" height="100%">
       <LineChart data={data}>
         <XAxis
           dataKey="time"
@@ -66,6 +67,7 @@ export function LiveMetricStream() {
         />
         <Line type="monotone" dataKey="value" stroke="hsl(var(--cyan-500))" strokeWidth={2} dot={false} isAnimationActive={false} />
       </LineChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   )
 }

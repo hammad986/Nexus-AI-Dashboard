@@ -11,12 +11,16 @@ import {
   YAxis,
 } from "recharts"
 import { acquisitionData } from "@/data/mock-analytics"
+import { useDemoScenario } from '@/providers/demo-scenario-provider'
 
 export function AcquisitionChart() {
+  const { metrics } = useDemoScenario()
+  const data = metrics.acquisitionData
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <div className="w-full min-h-[280px]" style={{ height: 300 }}>
+      <ResponsiveContainer width="100%" height={300}>
       <BarChart
-        data={acquisitionData}
+        data={data}
         margin={{
           top: 10,
           right: 10,
@@ -44,10 +48,11 @@ export function AcquisitionChart() {
           itemStyle={{ color: "hsl(var(--foreground))" }}
         />
         <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "10px" }} />
-        <Bar dataKey="organic" name="Organic" stackId="a" fill="hsl(var(--primary))" radius={[0, 0, 4, 4]} />
-        <Bar dataKey="referral" name="Referral" stackId="a" fill="hsl(var(--primary) / 0.6)" />
-        <Bar dataKey="paid" name="Paid Ads" stackId="a" fill="hsl(var(--primary) / 0.3)" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="organic" name="Organic" stackId="a" fill="hsl(var(--primary))" radius={[0, 0, 4, 4]} isAnimationActive animationDuration={700} />
+        <Bar dataKey="referral" name="Referral" stackId="a" fill="hsl(var(--primary) / 0.6)" isAnimationActive animationDuration={700} />
+        <Bar dataKey="paid" name="Paid Ads" stackId="a" fill="hsl(var(--primary) / 0.3)" radius={[4, 4, 0, 0]} isAnimationActive animationDuration={900} />
       </BarChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   )
 }

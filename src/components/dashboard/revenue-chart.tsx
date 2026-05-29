@@ -10,12 +10,16 @@ import {
   YAxis,
 } from "recharts"
 import { revenueData } from "@/data/mock-analytics"
+import { useDemoScenario } from '@/providers/demo-scenario-provider'
 
 export function RevenueChart() {
+  const { metrics } = useDemoScenario()
+  const data = metrics.revenueData
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <div className="w-full min-h-[300px]" style={{ height: 350 }}>
+      <ResponsiveContainer width="100%" height={350}>
       <AreaChart
-        data={revenueData}
+        data={data}
         margin={{
           top: 10,
           right: 10,
@@ -62,6 +66,8 @@ export function RevenueChart() {
           fillOpacity={1}
           fill="url(#colorPredicted)"
           name="predicted"
+          isAnimationActive={true}
+          animationDuration={700}
         />
         <Area
           type="monotone"
@@ -72,8 +78,11 @@ export function RevenueChart() {
           fill="url(#colorCurrent)"
           name="current"
           activeDot={{ r: 6, fill: "hsl(var(--primary))", stroke: "hsl(var(--background))", strokeWidth: 2 }}
+          isAnimationActive={true}
+          animationDuration={900}
         />
       </AreaChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   )
 }

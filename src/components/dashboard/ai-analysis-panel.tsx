@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from 'framer-motion'
 import { AIAnalysisResponse } from "@/types/ai";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -50,7 +51,8 @@ export function AiAnalysisPanel() {
   return (
     <div className="flex flex-col gap-6">
       {/* Executive Summary */}
-      <Card className="relative overflow-hidden border-indigo-500/30 shadow-md bg-gradient-to-br from-indigo-500/10 via-background to-background">
+      <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
+        <Card className="relative overflow-hidden border-indigo-500/30 shadow-md bg-gradient-to-br from-indigo-500/10 via-background to-background">
         <div className="absolute top-0 right-0 p-6 opacity-10">
           <Sparkles className="h-32 w-32 text-indigo-500" />
         </div>
@@ -93,45 +95,51 @@ export function AiAnalysisPanel() {
             </div>
           </div>
         </CardContent>
-      </Card>
+        </Card>
+      </motion.div>
 
       {/* Opportunities & Risks Grid */}
       <div className="grid gap-4 flex-1">
         {analysis.opportunities.map((opp, idx) => (
-          <Card key={idx} className="border-emerald-500/20 bg-emerald-500/5 dark:bg-emerald-500/10 shadow-sm transition-all hover:shadow-md">
-            <CardContent className="p-4 flex gap-4">
-              <div className="mt-1 p-2 bg-emerald-500/20 rounded-full h-fit flex-shrink-0 text-emerald-600 dark:text-emerald-400">
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="flex-1 space-y-1">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-emerald-900 dark:text-emerald-100 text-sm">{opp.title}</h4>
-                  <span className="text-[10px] font-bold text-emerald-600 bg-emerald-500/20 px-2 py-0.5 rounded-full">{opp.confidence}% Match</span>
+          <motion.div key={idx} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: idx * 0.03 }}>
+            <Card className="border-emerald-500/20 bg-emerald-500/5 dark:bg-emerald-500/10 shadow-sm transition-transform transition-shadow duration-200 hover:-translate-y-0.5 hover:shadow-2xl focus-within:shadow-2xl">
+              <CardContent className="p-4 flex gap-4">
+                <div className="mt-1 p-2 bg-emerald-500/20 rounded-full h-fit flex-shrink-0 text-emerald-600 dark:text-emerald-400">
+                  <TrendingUp className="h-4 w-4" />
                 </div>
-                <p className="text-xs text-foreground/80 leading-relaxed">{opp.description}</p>
-                <button className="text-xs text-emerald-600 dark:text-emerald-400 font-bold mt-2 flex items-center gap-1 hover:underline">
-                  {opp.action} <ArrowRight className="h-3 w-3" />
-                </button>
-              </div>
-            </CardContent>
-          </Card>
+                <div className="flex-1 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-semibold text-emerald-900 dark:text-emerald-100 text-sm">{opp.title}</h4>
+                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-500/20 px-2 py-0.5 rounded-full">{opp.confidence}% Match</span>
+                  </div>
+                  <p className="text-xs text-foreground/80 leading-relaxed">{opp.description}</p>
+                  <button className="text-xs text-emerald-600 dark:text-emerald-400 font-bold mt-2 flex items-center gap-1 transition-colors duration-150 hover:bg-emerald-500/5 px-2 py-1 rounded-sm">
+                    {opp.action} <ArrowRight className="h-3 w-3" />
+                  </button>
+                  
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
 
         {analysis.risks.map((risk, idx) => (
-          <Card key={idx} className="border-rose-500/20 bg-rose-500/5 dark:bg-rose-500/10 shadow-sm transition-all hover:shadow-md">
-            <CardContent className="p-4 flex gap-4">
-              <div className="mt-1 p-2 bg-rose-500/20 rounded-full h-fit flex-shrink-0 text-rose-600 dark:text-rose-400">
-                <AlertTriangle className="h-4 w-4" />
-              </div>
-              <div className="flex-1 space-y-1">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-rose-900 dark:text-rose-100 text-sm">{risk.title}</h4>
-                  <span className="text-[10px] font-bold text-rose-600 bg-rose-500/20 px-2 py-0.5 rounded-full">{risk.impact} Impact</span>
+          <motion.div key={idx} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: idx * 0.03 }}>
+            <Card className="border-rose-500/20 bg-rose-500/5 dark:bg-rose-500/10 shadow-sm transition-transform transition-shadow duration-200 hover:-translate-y-0.5 hover:shadow-2xl focus-within:shadow-2xl">
+              <CardContent className="p-4 flex gap-4">
+                <div className="mt-1 p-2 bg-rose-500/20 rounded-full h-fit flex-shrink-0 text-rose-600 dark:text-rose-400">
+                  <AlertTriangle className="h-4 w-4" />
                 </div>
-                <p className="text-xs text-foreground/80 leading-relaxed">{risk.description}</p>
-              </div>
-            </CardContent>
-          </Card>
+                <div className="flex-1 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-semibold text-rose-900 dark:text-rose-100 text-sm">{risk.title}</h4>
+                    <span className="text-[10px] font-bold text-rose-600 bg-rose-500/20 px-2 py-0.5 rounded-full">{risk.impact} Impact</span>
+                  </div>
+                  <p className="text-xs text-foreground/80 leading-relaxed">{risk.description}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
       </div>
 

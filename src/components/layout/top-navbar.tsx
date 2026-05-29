@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Search, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import { createClient } from "@/lib/supabase/client"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -12,33 +11,12 @@ import { Separator } from "@/components/ui/separator"
 import { NotificationCenter } from "@/components/dashboard/notification-center"
 import { AccountDropdown } from "@/components/dashboard/account-dropdown"
 import { mockNotifications } from "@/lib/saas/mock-data"
-import { hasSupabaseConfig } from "@/lib/supabase/config"
 
 import { CommandPalette } from "./command-palette"
+import ScenarioSwitcher from '@/components/demo/scenario-switcher'
 
 export function TopNavbar() {
   const { setTheme, theme } = useTheme()
-  const supabase = React.useMemo(() => createClient(), [])
-  const [email, setEmail] = React.useState<string | null>(null)
-
-  React.useEffect(() => {
-    if (!hasSupabaseConfig()) {
-      setEmail('founder@nexusai.dev')
-      return
-    }
-
-    const getUser = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user) {
-          setEmail(user.email ?? null)
-        }
-      } catch {
-        setEmail('founder@nexusai.dev')
-      }
-    }
-    getUser()
-  }, [supabase])
 
   return (
     <header className="sticky top-0 z-50 flex h-14 w-full shrink-0 items-center justify-between border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6">
@@ -51,6 +29,7 @@ export function TopNavbar() {
       </div>
       
       <div className="flex items-center gap-2">
+        <ScenarioSwitcher />
         <NotificationCenter notifications={mockNotifications} />
         <Button
           variant="ghost"
@@ -62,7 +41,7 @@ export function TopNavbar() {
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
         </Button>
-        <AccountDropdown email={email} />
+        <AccountDropdown />
       </div>
     </header>
   )

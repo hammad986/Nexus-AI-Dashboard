@@ -63,15 +63,15 @@ export function CommandPalette() {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
-            <CommandItem onSelect={() => runCommand(() => router.push('/dashboard'))}>
+            <CommandItem className="transition-colors rounded-md hover:bg-muted/50" onSelect={() => runCommand(() => router.push('/dashboard'))}>
               <LayoutDashboard className="mr-2 h-4 w-4" />
               <span>Command Center</span>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => router.push('/analytics'))}>
+            <CommandItem className="transition-colors rounded-md hover:bg-muted/50" onSelect={() => runCommand(() => router.push('/analytics'))}>
               <BarChart className="mr-2 h-4 w-4" />
               <span>Full Analytics</span>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => router.push('/reports'))}>
+            <CommandItem className="transition-colors rounded-md hover:bg-muted/50" onSelect={() => runCommand(() => router.push('/reports'))}>
               <FileText className="mr-2 h-4 w-4" />
               <span>Report History</span>
             </CommandItem>

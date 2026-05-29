@@ -11,7 +11,7 @@ const priorityClassNames: Record<SaaSReport['priority'], string> = {
 
 export function AIReportCard({ report }: { report: SaaSReport }) {
   return (
-    <Card className="border-border/60 bg-gradient-to-br from-background to-muted/20 shadow-lg shadow-black/10">
+    <Card className="border-border/60 bg-gradient-to-br from-background to-muted/20 shadow-lg shadow-black/10 transition-transform duration-200 hover:-translate-y-1 hover:shadow-2xl focus-within:shadow-2xl rounded-lg">
       <CardHeader className="space-y-3">
         <div className="flex items-center justify-between gap-3">
           <CardTitle className="text-lg">{report.title}</CardTitle>

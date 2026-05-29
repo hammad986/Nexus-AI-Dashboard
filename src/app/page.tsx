@@ -2,126 +2,106 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowRight, BarChart3, BrainCircuit, Command, LineChart, Sparkles, Zap } from "lucide-react"
+import { ArrowRight, BarChart3, BrainCircuit, Command, LineChart, Sparkles, Zap, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Logo from "@/components/logo"
 
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
-      {/* Header */}
-      <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-border/40 bg-background/60 px-6 backdrop-blur-xl transition-all">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <BrainCircuit className="h-5 w-5 text-primary-foreground" />
+      <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-border/40 bg-background/60 px-6 backdrop-blur-xl">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3">
+            <div className="rounded-lg bg-gradient-to-r from-primary to-blue-400 p-1">
+              <Logo className="h-8 w-8" />
+            </div>
+            <div className="leading-tight">
+              <div className="text-lg font-extrabold tracking-tight">Nexus AI Ops</div>
+              <div className="text-xs text-muted-foreground">Startup Intelligence • Demo</div>
+            </div>
           </div>
-          <span className="text-xl font-bold tracking-tight">Nexus AI Ops</span>
         </div>
+
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex text-muted-foreground">
           <Link href="#features" className="hover:text-foreground transition-colors">Features</Link>
-          <Link href="#intelligence" className="hover:text-foreground transition-colors">Intelligence</Link>
+          <Link href="#copilot" className="hover:text-foreground transition-colors">AI Copilot</Link>
           <Link href="#showcase" className="hover:text-foreground transition-colors">Showcase</Link>
+          <Link href="#pricing" className="hover:text-foreground transition-colors">Story</Link>
         </nav>
+
         <div className="flex items-center gap-4">
           <Link href="/dashboard">
-            <Button className="h-9 gap-2 rounded-full px-4">
-              Enter Demo <ArrowRight className="h-4 w-4" />
-            </Button>
+            <Button className="h-9 gap-2 rounded-full px-4">Enter Demo <ArrowRight className="h-4 w-4" /></Button>
           </Link>
         </div>
       </header>
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden pt-24 md:pt-32 lg:pt-40">
-          <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))]" />
-          
-          <div className="container relative z-10 mx-auto px-4 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/50 px-3 py-1 text-sm font-medium backdrop-blur-sm"
-            >
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span>Introducing Nexus Engine 2.0</span>
-            </motion.div>
-            
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mx-auto mt-6 max-w-4xl text-balance text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
-            >
-              The Operations Platform for <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Hyper-Growth</span> Startups.
-            </motion.h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl"
-            >
-              Instantly monitor revenue, predict churn, and act on AI-driven insights. 
-              Nexus connects directly to your data streams to act as your autonomous operational analyst.
-            </motion.p>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-            >
-              <Link href="/dashboard">
-                <Button size="lg" className="h-12 gap-2 rounded-full px-8 text-base">
-                  Launch Live Demo <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="#architecture">
-                <Button size="lg" variant="outline" className="h-12 rounded-full px-8 text-base">
-                  View Architecture
-                </Button>
-              </Link>
-            </motion.div>
-          </div>
+        {/* Demo Banner */}
+        <div className="bg-gradient-to-r from-[#081026]/60 to-transparent border-b border-border/30 py-2">
+          <div className="container mx-auto px-4 text-sm text-muted-foreground flex items-center justify-center">Demo Intelligence Environment — curated scenarios for portfolio showcase</div>
+        </div>
 
-          {/* Product Preview Glow / Shadow */}
-          <div className="relative mx-auto mt-20 max-w-[80vw] md:max-w-6xl">
-            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-primary/20 via-primary/5 to-blue-500/20 opacity-50 blur-3xl" />
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="relative rounded-2xl border border-border/40 bg-background/50 p-2 shadow-2xl backdrop-blur-sm"
-            >
-              <div className="aspect-[16/9] overflow-hidden rounded-xl border border-border/50 bg-muted/20 relative flex items-center justify-center">
-                 <div className="text-center text-muted-foreground flex flex-col items-center gap-4">
-                    <BarChart3 className="h-16 w-16 opacity-50" />
-                    <p>Interactive Demo Environment Available</p>
+        {/* Hero */}
+        <section className="relative overflow-hidden pt-12 md:pt-20">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-7">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-muted/30 px-3 py-1 text-sm font-medium text-primary">
+                    <Sparkles className="h-4 w-4" />
+                    Demo-ready • Portfolio Showcase
+                  </div>
+
+                  <h1 className="mt-6 text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl md:text-7xl">
+                    Nexus AI Ops — Studio for Startup Intelligence
+                  </h1>
+
+                  <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
+                    A premium demo experience that surfaces revenue signals, retention alarms, and AI‑driven opportunities — built for portfolio impact.
+                  </p>
+
+                  <div className="mt-8 flex flex-wrap gap-3">
                     <Link href="/dashboard">
-                      <Button variant="secondary" className="shadow-lg">Enter Dashboard</Button>
+                      <Button size="lg" className="h-12 gap-2 rounded-full px-6">Open Demo <ArrowRight className="h-4 w-4" /></Button>
                     </Link>
-                 </div>
+                    <a href="#showcase" className="inline-flex items-center rounded-full bg-muted/20 px-5 py-3 text-sm font-medium">View Showcase</a>
+                  </div>
+                </motion.div>
               </div>
-            </motion.div>
+
+              <div className="lg:col-span-5">
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="relative rounded-2xl border border-border/40 bg-card p-4 shadow-2xl">
+                  <div className="aspect-[16/9] overflow-hidden rounded-xl border border-border/50 bg-muted/10">
+                    <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+                      <div className="text-center">
+                        <BarChart3 className="mx-auto h-12 w-12 opacity-70" />
+                        <div className="mt-3 text-sm">Live demo preview — interactive charts, AI insights, scenario switcher</div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Feature grid */}
-        <section id="features" className="container mx-auto px-4 py-32">
-          <div className="mb-16 text-center">
-            <h2 className="text-3xl font-bold tracking-tight md:text-5xl">Everything you need to orchestrate scale.</h2>
-            <p className="mt-4 text-muted-foreground">Purpose-built for modern operators who refuse to navigate complex BI tools.</p>
+        {/* Features */}
+        <section id="features" className="container mx-auto px-4 py-20">
+          <div className="mb-10 text-center">
+            <h2 className="text-3xl font-bold md:text-4xl">What it does — at a glance</h2>
+            <p className="mt-3 text-muted-foreground">Concise capabilities that impress stakeholders and explain design choices.</p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
             {[
-              { title: "Autonomous Insights", desc: "Our AI Engine constantly scans your metrics for anomalies and retention risks.", icon: BrainCircuit },
-              { title: "Real-time Telemetry", desc: "Connects to your streams to provide second-by-second analytics updates.", icon: Zap },
-              { title: "Command & Control", desc: "Take action securely from an enterprise-grade command palette.", icon: Command },
+              { title: "Autonomous Insights", desc: "AI surface-level opportunities and risks with human-readable explainers.", icon: BrainCircuit },
+              { title: "Real-time Telemetry", desc: "Second-by-second visualizations and subtle animations for presentation clarity.", icon: Zap },
+              { title: "Command Studio", desc: "Palette-driven micro-actions for demo scenarios and persona storytelling.", icon: Command },
             ].map((f, i) => (
-              <div key={i} className="group relative overflow-hidden rounded-2xl border border-border/40 bg-card p-8 transition-colors hover:bg-muted/50">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 mb-6">
-                  <f.icon className="h-6 w-6 text-primary" />
+              <div key={i} className="group relative overflow-hidden rounded-2xl border border-border/40 bg-card p-8 transition-colors hover:shadow-lg">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-primary to-blue-400 mb-6 text-white">
+                  <f.icon className="h-6 w-6" />
                 </div>
                 <h3 className="mb-3 text-xl font-bold">{f.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{f.desc}</p>
@@ -129,17 +109,84 @@ export default function LandingPage() {
             ))}
           </div>
         </section>
-      </main>
 
-      <footer className="border-t border-border/40 bg-muted/20 py-12">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <div className="flex justify-center items-center gap-2 mb-4">
-            <BrainCircuit className="h-5 w-5" />
-            <span className="font-bold">Nexus AI Ops</span>
+        {/* AI Copilot Showcase */}
+        <section id="copilot" className="container mx-auto px-4 py-20">
+          <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+            <div>
+              <h3 className="text-2xl font-bold">AI Copilot — Startups get recommendations</h3>
+              <p className="mt-3 text-muted-foreground">A conversational overlay that suggests high-impact actions and writes human‑friendly summaries for stakeholders.</p>
+
+              <div className="mt-6 space-y-3">
+                <div className="rounded-lg border border-border/30 bg-muted/10 p-4">
+                  <div className="text-sm font-semibold">Upsell Opportunity</div>
+                  <div className="mt-1 text-muted-foreground text-sm">28 mid-tier customers show enterprise-like usage. Suggested campaign could increase MRR by ~$14k.</div>
+                </div>
+
+                <div className="rounded-lg border border-border/30 bg-muted/10 p-4">
+                  <div className="text-sm font-semibold">Retention Alert</div>
+                  <div className="mt-1 text-muted-foreground text-sm">Cohort 2024‑Q3 login frequency dropped 18% in two weeks. Recommend re-engagement flow.</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="rounded-2xl border border-border/40 bg-card p-6 shadow-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-md bg-gradient-to-r from-primary to-blue-400" />
+                    <div>
+                      <div className="font-semibold">Nexus Copilot</div>
+                      <div className="text-sm text-muted-foreground">AI assistant • explainers • one-click actions</div>
+                    </div>
+                  </div>
+                  <Button variant="outline">Open</Button>
+                </div>
+
+                <div className="mt-6 rounded-md bg-muted/5 p-4 text-sm text-muted-foreground">"Summarize last 30 days revenue and flag anomalies" → <span className="font-medium text-foreground">Done: Revenue anomaly in Nov projected +25%</span></div>
+              </div>
+            </div>
           </div>
-          <p className="text-sm">A portfolio showcase project. Not a real SaaS product.</p>
-        </div>
-      </footer>
+        </section>
+
+        {/* Showcase (scenarios placeholder) */}
+        <section id="showcase" className="container mx-auto px-4 py-20">
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold">Showcase Scenarios</h2>
+            <p className="mt-3 text-muted-foreground">Switch between curated startup stories to see the product in action.</p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-4">
+            {[
+              { title: 'Hyper-growth', desc: 'Growing ARR, scaling ops', color: 'from-primary to-blue-400' },
+              { title: 'Retention Crisis', desc: 'Dropping weekly active users', color: 'from-red-500 to-pink-400' },
+              { title: 'Revenue Anomaly', desc: 'Sudden spike or drop', color: 'from-yellow-400 to-orange-400' },
+              { title: 'Acquisition Spike', desc: 'Marketing channel success', color: 'from-green-400 to-teal-400' },
+            ].map((s, i) => (
+              <div key={i} className="group rounded-2xl border border-border/40 p-6 text-center hover:shadow-xl">
+                <div className={`mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr ${s.color} text-white`}>
+                  <Users className="h-5 w-5" />
+                </div>
+                <h4 className="mt-4 font-semibold">{s.title}</h4>
+                <div className="mt-2 text-sm text-muted-foreground">{s.desc}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Footer / CTA */}
+        <section className="border-t border-border/40 bg-muted/10 py-16">
+          <div className="container mx-auto px-4 text-center">
+            <h3 className="text-2xl font-bold">Make your portfolio pop</h3>
+            <p className="mt-2 text-muted-foreground">Open the demo and walk visitors through curated scenarios for maximum impression.</p>
+            <div className="mt-6 flex justify-center">
+              <Link href="/dashboard">
+                <Button size="lg" className="h-12 gap-2 rounded-full px-8">Try Demo • Nexus AI Ops</Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   )
 }

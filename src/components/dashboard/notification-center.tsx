@@ -38,7 +38,7 @@ export function NotificationCenter({ notifications }: { notifications: SaaSNotif
           <span className="absolute right-1 top-1 inline-flex h-2.5 w-2.5 rounded-full bg-cyan-400 ring-2 ring-background" />
         ) : null}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-80" align="end">
+      <DropdownMenuContent className="w-80 shadow-lg shadow-black/20 backdrop-blur-sm" align="end">
         <div className="px-3 py-2">
           <p className="text-sm font-semibold">Notifications</p>
           <p className="text-xs text-muted-foreground">{unreadCount} unread alerts and intelligence updates</p>
@@ -46,9 +46,15 @@ export function NotificationCenter({ notifications }: { notifications: SaaSNotif
         <DropdownMenuSeparator />
         {notifications.map((notification) => {
           const Icon = iconMap[notification.type]
-
           return (
-            <DropdownMenuItem key={notification.id} className={cn('items-start gap-3 py-3', notification.unread && 'bg-muted/40')}>
+            <DropdownMenuItem
+              key={notification.id}
+              className={cn(
+                'items-start gap-3 py-3 transition-colors transition-shadow duration-200 rounded-md',
+                notification.unread && 'bg-muted/40',
+                'hover:shadow-md hover:bg-muted/60'
+              )}
+            >
               <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full border bg-background">
                 <Icon className="h-4 w-4 text-cyan-500" />
               </div>

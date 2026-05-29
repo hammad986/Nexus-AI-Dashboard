@@ -10,12 +10,16 @@ import {
   YAxis,
 } from "recharts"
 import { retentionData } from "@/data/mock-analytics"
+import { useDemoScenario } from '@/providers/demo-scenario-provider'
 
 export function RetentionChart() {
+  const { metrics } = useDemoScenario()
+  const data = metrics.retentionData
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <div className="w-full min-h-[280px]" style={{ height: 300 }}>
+      <ResponsiveContainer width="100%" height={300}>
       <LineChart
-        data={retentionData}
+        data={data}
         margin={{
           top: 10,
           right: 10,
@@ -50,8 +54,11 @@ export function RetentionChart() {
           strokeWidth={2}
           dot={{ r: 4, fill: "hsl(var(--ring))", strokeWidth: 0 }}
           activeDot={{ r: 6, fill: "hsl(var(--ring))", stroke: "hsl(var(--background))", strokeWidth: 2 }}
+          isAnimationActive={true}
+          animationDuration={900}
         />
       </LineChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   )
 }
