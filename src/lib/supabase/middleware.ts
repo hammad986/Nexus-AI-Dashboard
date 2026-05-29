@@ -1,10 +1,23 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { hasSupabaseConfig } from './config'
+
+const PUBLIC_PATHS = ['/', '/auth/login', '/auth/signup', '/error']
+
+function isPublicPath(pathname: string) {
+  return PUBLIC_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`))
+}
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   })
+
+  // Demo Intelligence Environment: when no Supabase project is configured the
+  // app runs fully on mock data, so skip auth entirely instead of crashing.
+  if (!hasSupabaseConfig()) {
+    return supabaseResponse
+  }
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -35,12 +48,8 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith('/auth/login') &&
-    request.nextUrl.pathname !== '/auth/login'
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  if (!user && !isPublicPath(request.nextUrl.pathname)) {
+    // no user, redirect protected routes to the login page
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
     return NextResponse.redirect(url)
