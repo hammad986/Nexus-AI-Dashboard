@@ -1,0 +1,138 @@
+IMPORTANT
+
+This is a PORTFOLIO project, not a production SaaS.
+
+Do NOT add enterprise infrastructure, auth complexity, middleware hardening, deployment systems, or backend-heavy features.
+
+==================================================
+TASK
+====
+
+First, do a concise portfolio-gap audit of the current codebase.
+
+Identify only the high-impact missing pieces that would improve:
+
+* portfolio presentation
+* demo clarity
+* user experience
+* visual impressiveness
+
+Be brutally honest.
+
+Do NOT list low-value enterprise items.
+
+==================================================
+FOCUS AREAS
+===========
+
+I specifically want to know:
+
+1. What is still missing for a strong portfolio demo?
+2. What should be added with very limited scope?
+3. What should be left out completely?
+
+==================================================
+HIGHEST PRIORITY ADDITION
+=========================
+
+Add a simple but polished AI chatbot experience inside the product.
+
+Requirements:
+
+* user can chat with the AI assistant
+* the assistant should understand the current dashboard scenario / metrics
+* use the existing Gemini / AI system
+* keep it lightweight and portfolio-friendly
+* no backend expansion beyond what already exists
+* no auth complexity
+* no enterprise workflow
+
+The chatbot should feel like:
+
+* a smart product assistant
+* scenario-aware
+* responsive
+* polished
+* demo-ready
+
+==================================================
+CHAT EXPERIENCE REQUIREMENTS
+============================
+
+Implement:
+
+* chat input
+* send button
+* streaming or pseudo-streaming replies
+* quick prompt chips
+* assistant + user message bubbles
+* loading / thinking state
+* simple session memory for the current visit only
+
+The chatbot should help with questions like:
+
+* summarize this dashboard
+* why is churn rising?
+* what is the biggest opportunity?
+* explain the current scenario
+
+==================================================
+SCOPE LIMITS
+============
+
+Keep this small.
+
+Do NOT build:
+
+* full chat history database
+* auth-gated messaging
+* team collaboration
+* notifications expansion
+* enterprise memory systems
+* more SaaS infrastructure
+
+==================================================
+PHASED WORKFLOW
+===============
+
+If the work is larger than expected, split it into phases:
+
+Phase 1:
+
+* audit missing portfolio gaps
+* implement chatbot UI and scenario-aware responses
+
+Phase 2:
+
+* tiny polish items only if needed
+* empty states
+* micro copy improvements
+* final demo readiness checks
+
+==================================================
+VALIDATION
+==========
+
+After changes:
+Run the app and verify:
+
+* dashboard loads
+* AI chatbot works
+* scenario switching still works
+* build passes
+* no console errors
+* UI still feels clean
+
+==================================================
+FINAL OUTPUT
+============
+
+Provide:
+
+1. Missing portfolio gaps report
+2. What you added
+3. What you intentionally left out
+4. Files changed
+5. Build/runtime status
+
+Focus on portfolio impact, not production completeness.

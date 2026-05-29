@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Bot, Send, User, Sparkles, ChevronDown, Trash2 } from "lucide-react"
+import { Bot, Send, User, Sparkles, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ChatMessage } from "@/types/chat"
 import { useDemoScenario } from "@/providers/demo-scenario-provider"
@@ -33,17 +33,12 @@ const SCENARIO_BADGE_STYLES: Record<string, string> = {
 function getWelcomeMessage(scenario: string): string {
   const label = SCENARIO_LABELS[scenario] ?? scenario
   if (scenario === 'baseline') {
-    return "Hello. I'm Nexus, your startup intelligence copilot. I have full context of your dashboard metrics. What would you like to analyze?"
+    return "Hello. I'm Nexus, your startup intelligence copilot. Ask me anything about your current dashboard metrics — MRR, retention, acquisition, or opportunities."
   }
   return `Hello. I'm Nexus. I'm analyzing the **${label}** scenario. Ask me anything about what's happening and what you should do next.`
 }
 
-interface AiCopilotPanelProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export function AiCopilotPanel({ isOpen, onClose }: AiCopilotPanelProps) {
+export function AiChatSection() {
   const { scenario, metrics } = useDemoScenario()
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState("")
@@ -131,34 +126,34 @@ export function AiCopilotPanel({ isOpen, onClose }: AiCopilotPanelProps) {
       }
     } catch {
       setMessages(prev => prev.map(msg =>
-        msg.id === aiMessageId ? { ...msg, content: "Sorry, I encountered an error connecting to the intelligence engine." } : msg
+        msg.id === aiMessageId ? { ...msg, content: "Sorry, I encountered an error connecting to the intelligence engine. Please try again." } : msg
       ))
     } finally {
       setIsTyping(false)
     }
   }
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed bottom-4 right-4 z-50 w-full max-w-md h-[600px] max-h-[80vh] flex flex-col bg-background/95 backdrop-blur-md border border-border shadow-2xl rounded-2xl overflow-hidden animate-in slide-in-from-bottom-5">
-
+    <div className="rounded-2xl border border-border/40 bg-card overflow-hidden shadow-sm flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b bg-muted/30">
-        <div className="flex items-center gap-2.5">
-          <div className="p-1.5 rounded-md bg-indigo-500/20 text-indigo-500">
-            <Sparkles className="h-4 w-4" />
+      <div className="flex items-center justify-between px-5 py-4 border-b bg-gradient-to-r from-indigo-500/5 to-transparent">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-indigo-500/15 text-indigo-500">
+            <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold">Nexus Copilot</h3>
-            <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+            <h3 className="font-semibold text-sm">Ask Nexus AI</h3>
+            <p className="text-[10px] text-muted-foreground flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
               Analyzing: {scenarioLabel}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-1">
-          <span className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-full border", SCENARIO_BADGE_STYLES[scenario] ?? SCENARIO_BADGE_STYLES.baseline)}>
+        <div className="flex items-center gap-2">
+          <span className={cn(
+            "text-[10px] font-semibold px-2.5 py-1 rounded-full border",
+            SCENARIO_BADGE_STYLES[scenario] ?? SCENARIO_BADGE_STYLES.baseline
+          )}>
             {scenarioLabel}
           </span>
           <button
@@ -168,33 +163,26 @@ export function AiCopilotPanel({ isOpen, onClose }: AiCopilotPanelProps) {
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-muted rounded-full transition-colors text-muted-foreground hover:text-foreground"
-          >
-            <ChevronDown className="h-4 w-4" />
-          </button>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="h-[380px] overflow-y-auto p-4 space-y-4">
         {messages.map((msg) => (
           <div key={msg.id} className={cn("flex gap-3", msg.role === "user" ? "flex-row-reverse" : "flex-row")}>
             <div className={cn(
-              "h-8 w-8 rounded-full flex items-center justify-center shrink-0",
+              "h-7 w-7 rounded-full flex items-center justify-center shrink-0 mt-0.5",
               msg.role === "user" ? "bg-primary/10 text-primary" : "bg-indigo-500/10 text-indigo-500"
             )}>
-              {msg.role === "user" ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
+              {msg.role === "user" ? <User className="h-3.5 w-3.5" /> : <Bot className="h-3.5 w-3.5" />}
             </div>
-
             <div className={cn(
-              "max-w-[80%] rounded-2xl px-4 py-2.5 text-sm",
+              "max-w-[82%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
               msg.role === "user"
                 ? "bg-primary text-primary-foreground rounded-tr-sm"
                 : "bg-muted rounded-tl-sm border border-border/50"
             )}>
-              <div className="whitespace-pre-wrap leading-relaxed">
+              <div className="whitespace-pre-wrap">
                 {msg.content || (msg.role === "assistant" && isTyping && (
                   <span className="flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce [animation-delay:-0.3s]" />
@@ -211,7 +199,7 @@ export function AiCopilotPanel({ isOpen, onClose }: AiCopilotPanelProps) {
 
       {/* Suggested Prompts */}
       {messages.length <= 1 && (
-        <div className="px-4 pb-2 flex flex-wrap gap-2">
+        <div className="px-4 pb-3 flex flex-wrap gap-2">
           {suggestedPrompts.map((prompt, i) => (
             <button
               key={i}
@@ -225,16 +213,16 @@ export function AiCopilotPanel({ isOpen, onClose }: AiCopilotPanelProps) {
       )}
 
       {/* Input */}
-      <div className="p-4 bg-background border-t">
+      <div className="p-4 bg-background/50 border-t mt-auto">
         <form
-          onSubmit={(e) => { e.preventDefault(); handleSend(input); }}
+          onSubmit={(e) => { e.preventDefault(); handleSend(input) }}
           className="relative flex items-center"
         >
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={`Ask about ${scenarioLabel.toLowerCase()} metrics...`}
-            className="w-full bg-muted border-transparent focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 rounded-full pl-4 pr-12 py-3 text-sm transition-all outline-none"
+            className="w-full bg-muted border border-border/50 focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/30 rounded-full pl-4 pr-12 py-3 text-sm transition-all outline-none"
             disabled={isTyping}
           />
           <button
@@ -242,7 +230,7 @@ export function AiCopilotPanel({ isOpen, onClose }: AiCopilotPanelProps) {
             disabled={!input.trim() || isTyping}
             className="absolute right-2 p-1.5 bg-indigo-500 text-white rounded-full disabled:opacity-40 hover:bg-indigo-600 transition-all"
           >
-            <Send className="h-4 w-4 -ml-0.5" />
+            <Send className="h-3.5 w-3.5" />
           </button>
         </form>
       </div>

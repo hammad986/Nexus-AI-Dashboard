@@ -13,17 +13,26 @@ If the user asks something unrelated to business analytics, politely guide them 
 Here is the current operational context of the startup:
 `;
 
-export function buildChatContextPrompt(): string {
-  // Inject the mock data into the system prompt so the AI knows the context
-  const contextData = {
-    revenue: revenueData,
-    acquisition: acquisitionData,
-    retention: retentionData
+type MetricsData = {
+  revenueData: typeof revenueData
+  acquisitionData: typeof acquisitionData
+  retentionData: typeof retentionData
+}
+
+export function buildChatContextPrompt(metrics?: MetricsData, scenarioName?: string): string {
+  const contextData = metrics ?? {
+    revenueData,
+    acquisitionData,
+    retentionData,
   };
+
+  const scenarioLine = scenarioName && scenarioName !== 'Baseline'
+    ? `\nACTIVE SCENARIO: "${scenarioName}" — your analysis must reflect the specific dynamics of this startup situation. Tailor every insight to this context.\n`
+    : '';
 
   return `
     ${chatSystemInstruction}
-    
+    ${scenarioLine}
     CURRENT DASHBOARD DATA CONTEXT:
     ${JSON.stringify(contextData, null, 2)}
     

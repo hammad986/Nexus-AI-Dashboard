@@ -1,4 +1,5 @@
 import { AiAnalysisPanel } from '@/components/dashboard/ai-analysis-panel'
+import { AiChatSection } from '@/components/dashboard/ai-chat-section'
 import { ConversationHistory } from '@/components/dashboard/conversation-history'
 import { SavedInsightsPanel } from '@/components/dashboard/saved-insights-panel'
 import { AIMemoryTimeline } from '@/components/dashboard/ai-memory-timeline'
@@ -14,14 +15,21 @@ export default async function AIInsightsPage() {
         <h2 className="text-3xl font-bold tracking-tight">AI Insights</h2>
         <p className="text-muted-foreground">Saved intelligence and chat history for {snapshot.workspace?.name ?? 'your workspace'}.</p>
       </div>
-      <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+
+      {/* AI Chat + Analysis grid */}
+      <div className="grid gap-6 xl:grid-cols-2">
+        <AiChatSection />
         <AiAnalysisPanel />
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[1fr_0.85fr]">
         <SavedInsightsPanel insights={snapshot.savedInsights} />
+        <div className="space-y-6">
+          <HistoricalComparisonCard title="Engagement lift" current={74.0} previous={69.2} />
+          <HistoricalComparisonCard title="Risk score" current={12.0} previous={15.4} suffix=" pts" />
+        </div>
       </div>
-      <div className="grid gap-6 lg:grid-cols-2">
-        <HistoricalComparisonCard title="Engagement lift" current={74.0} previous={69.2} />
-        <HistoricalComparisonCard title="Risk score" current={12.0} previous={15.4} suffix=" pts" />
-      </div>
+
       <AIMemoryTimeline snapshots={snapshot.analyticsSnapshots} summaries={snapshot.executiveSummaries} activityLogs={snapshot.activityLogs} />
       <ConversationHistory conversations={snapshot.conversations} />
     </div>
