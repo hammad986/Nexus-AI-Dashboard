@@ -1,0 +1,13 @@
+export type Role = "user" | "assistant";
+
+export interface ChatMessage {
+  id: string;
+  role: Role;
+  content: string;
+  createdAt: Date;
+}
+
+export interface ChatRequest {
+  messages: { role: Role; content: string }[];
+  context?: any;
+}
